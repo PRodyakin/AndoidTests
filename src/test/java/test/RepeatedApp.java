@@ -47,7 +47,7 @@ public class RepeatedApp {
 		login();
 
 		//take
-		take();
+		//take();
 
 	}
 	
@@ -137,7 +137,7 @@ public class RepeatedApp {
 
 	@Step("ֲûבמנ פאיכא טח דאכונוט")
 	public void chooseFromGalary() {
-		MobileElement el1 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.ImageView");
+		MobileElement el1 = (MobileElement) driver.findElementById("com.android.documentsui:id/icon_mime");
 		el1.click();
 	}
 
