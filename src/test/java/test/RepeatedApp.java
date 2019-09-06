@@ -34,10 +34,8 @@ public class RepeatedApp {
 	
 	@Test
 	public void RepeatedApptest() throws MalformedURLException{
-		
-		
-		appiumInit();
-		
+				
+		appiumInit();		
 		
 		//caps.setCapability("automationName", "selendroid");
 		// TODO Auto-generated method stub
@@ -117,27 +115,46 @@ public class RepeatedApp {
 		driver.context("NATIVE_APP");
 		//MobileElement el2 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/menuButton");
 		//el2.click();
+		takeApp();
+		choosePhoto();		
+		chooseFromGalary();
+		continueApp();
+		//driver.quit();
+		titleIsExpected();
+	}
+
+	@Step("Открыто окно оценки платежеспособности")
+	public void titleIsExpected() {
+		MobileElement e18 = (MobileElement) driver.findElement(By.id("com.oneclickmoney.ocm:id/tvTitle"));
+		assert cleanStr(e18.getText()).equals(cleanStr(ASSERT_ACCEPTED));
+	}
+
+	@Step("Продолжить оформление")
+	public void continueApp() {
+		MobileElement el7 = (MobileElement) driver.findElement(By.id("Продолжить"));
+		el7.click();
+	}
+
+	@Step("Выбор файла из галереи")
+	public void chooseFromGalary() {
+		MobileElement el1 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.ImageView");
+		el1.click();
+	}
+
+	@Step("Нажатие кнопки выбора фото")
+	public void choosePhoto() {
+		MobileElement el5 = (MobileElement) driver.findElementByXPath("//android.view.View[@content-desc=\"Выбрать\"]");
+		el5.click();
+	}
+
+	@Step("Нажатие кнопки оформления заявки")
+	public void takeApp() {
 		MobileElement el3 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/takeText");
 		el3.click();
 		MobileElement el4 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/take");
 		el4.click();
-		MobileElement el5 = (MobileElement) driver.findElementByXPath("//android.view.View[@content-desc=\"Выбрать\"]");
-		el5.click();		
-		MobileElement el1 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.ImageView");
-		el1.click();
-		MobileElement el7 = (MobileElement) driver.findElement(By.id("Продолжить"));
-		el7.click();
-		//driver.quit();
-		MobileElement e18 = (MobileElement) driver.findElement(By.id("com.oneclickmoney.ocm:id/tvTitle"));
-		assert cleanStr(e18.getText()).equals(cleanStr(ASSERT_ACCEPTED));
 	}
 	
-	
-
-	
-
-	
-
 	public static String cleanStr(String str) {
 		str = str.replaceAll("[\\W]", "");
 		str = str.replaceAll("[\\S]", "");
