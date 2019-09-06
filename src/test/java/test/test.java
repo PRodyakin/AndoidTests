@@ -99,7 +99,7 @@ public class test {
 	@Step
 	public AndroidDriver<MobileElement> appiumInit() throws MalformedURLException {
 		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		//desiredCapabilities.setCapability("deviceName", "My Phone");
+		desiredCapabilities.setCapability("deviceName", "My Phone");
 		desiredCapabilities.setCapability("udid", "emulator-5554"); //Give Device ID of your mobile phone
 		desiredCapabilities.setCapability("platformName", "Android");
 		desiredCapabilities.setCapability("platformVersion", "5.1");
