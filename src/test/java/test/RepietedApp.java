@@ -13,14 +13,14 @@ import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 
-public class test {
+public class RepietedApp {
 	
 	String ASSERT_ACCEPTED = "Мы оцениваем вашу\r\n" + 
 			"		платежеспособность";
 
 	@Test
 	@Feature("Автотест для проверки повторной заявки пользователя")
-	public void test1() throws MalformedURLException{
+	public void RepietedApptest() throws MalformedURLException{
 		AndroidDriver<MobileElement> driver = appiumInit();
 		//caps.setCapability("automationName", "selendroid");
 		// TODO Auto-generated method stub
@@ -53,7 +53,7 @@ public class test {
 		el7.click();
 		//driver.quit();
 		MobileElement e18 = (MobileElement) driver.findElement(By.id("com.oneclickmoney.ocm:id/tvTitle"));
-		assert BaseTest.cleanStr(e18.getText()).equals(BaseTest.cleanStr(ASSERT_ACCEPTED));
+		assert cleanStr(e18.getText()).equals(cleanStr(ASSERT_ACCEPTED));
 	}
 	
 	@Step
@@ -109,6 +109,12 @@ public class test {
 		desiredCapabilities.setCapability("unicodeKeyboard", "true");
 		AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities);
 		return driver;
+	}
+	
+	public static String cleanStr(String str) {
+		str = str.replaceAll("[\\W]", "");
+		str = str.replaceAll("[\\S]", "");
+		return str;
 	}
 
 	
