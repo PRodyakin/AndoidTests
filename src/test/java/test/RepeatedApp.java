@@ -10,17 +10,19 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.qameta.allure.Feature;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 
-public class RepietedApp {
+
+@Epic("Автотест для проверки повторной заявки пользователя")
+public class RepeatedApp {
 	
 	String ASSERT_ACCEPTED = "Мы оцениваем вашу\r\n" + 
 			"		платежеспособность";
 
 	@Test
-	@Feature("Автотест для проверки повторной заявки пользователя")
-	public void RepietedApptest() throws MalformedURLException{
+	public void RepeatedApptest() throws MalformedURLException{
 		AndroidDriver<MobileElement> driver = appiumInit();
 		//caps.setCapability("automationName", "selendroid");
 		// TODO Auto-generated method stub
@@ -36,7 +38,7 @@ public class RepietedApp {
 
 	}
 	
-	@Step
+	@Description("Оформление повторной заявки")
 	public void take(AndroidDriver<MobileElement> driver) {
 		driver.context("NATIVE_APP");
 		//MobileElement el2 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/menuButton");
@@ -46,9 +48,9 @@ public class RepietedApp {
 		MobileElement el4 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/take");
 		el4.click();
 		MobileElement el5 = (MobileElement) driver.findElementByXPath("//android.view.View[@content-desc=\"Выбрать\"]");
-		el5.click();
-		MobileElement el6 = (MobileElement) driver.findElement(By.id("com.android.documentsui:id/icon_mime"));
-		el6.click();
+		el5.click();		
+		MobileElement el1 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.ImageView");
+		el1.click();
 		MobileElement el7 = (MobileElement) driver.findElement(By.id("Продолжить"));
 		el7.click();
 		//driver.quit();
@@ -56,7 +58,7 @@ public class RepietedApp {
 		assert cleanStr(e18.getText()).equals(cleanStr(ASSERT_ACCEPTED));
 	}
 	
-	@Step
+	@Description("Вход в систему через почтовый адрес")
 	public void login(AndroidDriver<MobileElement> driver) {
 		MobileElement el111 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/menuButton");
 		el111.click();
@@ -80,7 +82,7 @@ public class RepietedApp {
 		driver.findElement(By.className("btn-yellow")).click();
 	}
 
-	@Step
+	@Description("Шаги после первого запуска")
 	public void afterReset(AndroidDriver<MobileElement> driver) {
 		driver.resetApp();
 		//after reset
@@ -96,7 +98,7 @@ public class RepietedApp {
 		el43.click();
 	}
 	
-	@Step
+	@Description("Инициализация")
 	public AndroidDriver<MobileElement> appiumInit() throws MalformedURLException {
 		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 		desiredCapabilities.setCapability("deviceName", "My Phone");
