@@ -2,6 +2,7 @@ package test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.FixMethodOrder;
@@ -12,6 +13,7 @@ import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.core.annotation.Order;
 
@@ -137,8 +139,17 @@ public class RepeatedApp {
 
 	@Step("Выбор файла из галереи")
 	public void chooseFromGalary() {
-		MobileElement el1 = (MobileElement) driver.findElementById("com.android.documentsui:id/icon_mime");
-		el1.click();
+		
+		
+		try {
+			MobileElement el1 = (MobileElement) driver.findElementById("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.ImageView");
+			el1.click();
+		} catch (Exception e) {
+			MobileElement el1 = (MobileElement) driver.findElementById("com.android.documentsui:id/icon_mime");
+			el1.click();
+		} 
+				
+		
 	}
 
 	@Step("Нажатие кнопки выбора фото")
