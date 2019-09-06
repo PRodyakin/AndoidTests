@@ -47,7 +47,7 @@ public class RepeatedApp {
 		login();
 
 		//take
-		//take();
+		take();
 
 	}
 	
