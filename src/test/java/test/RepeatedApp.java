@@ -2,26 +2,14 @@ package test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.FixMethodOrder;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestWatcher;
-import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.springframework.core.annotation.Order;
-
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Epic;
-import io.qameta.allure.Attachment;
-import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 
 
@@ -55,7 +43,7 @@ public class RepeatedApp {
 	
 	
 	@Step("Инициализация")
-	public void appiumInit() throws MalformedURLException {
+	private void appiumInit() throws MalformedURLException {
 		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 		desiredCapabilities.setCapability("deviceName", "My Phone");
 		desiredCapabilities.setCapability("udid", "emulator-5554"); //Give Device ID of your mobile phone
@@ -65,13 +53,14 @@ public class RepeatedApp {
 		desiredCapabilities.setCapability("appActivity", ".PreloadActivity");
 		desiredCapabilities.setCapability("noReset", "true");
 		desiredCapabilities.setCapability("unicodeKeyboard", "true");
+		desiredCapabilities.setCapability("automationName", "UiAutomator2");
 		driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities);
 
 	}
 	
 	
 	@Step("Шаги после первого запуска")
-	public void afterReset() {
+	private void afterReset() {
 		driver.resetApp();
 		//after reset
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -88,7 +77,7 @@ public class RepeatedApp {
 	
 	
 	@Step("Вход в систему через почтовый адрес")
-	public void login() {
+	private void login() {
 		MobileElement el111 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/menuButton");
 		el111.click();
 		MobileElement el211 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/loginText");
@@ -113,7 +102,7 @@ public class RepeatedApp {
 	
 	
 	@Step("Оформление повторной заявки")
-	public void take() {
+	private void take() {
 		driver.context("NATIVE_APP");
 		//MobileElement el2 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/menuButton");
 		//el2.click();
@@ -126,7 +115,7 @@ public class RepeatedApp {
 	}
 	
 	@Step("Нажатие кнопки оформления заявки")
-	public void takeApp() {
+	private void takeApp() {
 		MobileElement el3 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/takeText");
 		el3.click();
 		MobileElement el4 = (MobileElement) driver.findElementById("com.oneclickmoney.ocm:id/take");
@@ -134,17 +123,17 @@ public class RepeatedApp {
 	}
 	
 	@Step("Нажатие кнопки выбора фото")
-	public void choosePhoto() {
+	private void choosePhoto() {
 		MobileElement el5 = (MobileElement) driver.findElementByXPath("//android.view.View[@content-desc=\"Выбрать\"]");
 		el5.click();
 	}
 	
 	@Step("Выбор файла из галереи")
-	public void chooseFromGalary() {
+	private void chooseFromGalary() {
 		
 	
 		try {
-			MobileElement el1 = (MobileElement) driver.findElementById("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.ImageView");
+			MobileElement el1 = (MobileElement)  driver.findElementById("com.android.documentsui:id/date");;
 			el1.click();
 		} catch (Exception e) {
 			
@@ -153,7 +142,7 @@ public class RepeatedApp {
 				el1.click();
 			} catch (Exception e1) {
 				MobileElement el1 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.ImageView\r\n");
-	
+				el1.click();
 				
 				
 			}
@@ -162,18 +151,18 @@ public class RepeatedApp {
 	}
 	
 	@Step("Продолжить оформление")
-	public void continueApp() {
+	private void continueApp() {
 		MobileElement el7 = (MobileElement) driver.findElementByXPath("//android.widget.Button[@content-desc=\"Продолжить\"]");
 		el7.click();
 	}
 
 	@Step("Открыто окно оценки платежеспособности")
-	public void titleIsExpected() {
+	private void titleIsExpected() {
 		MobileElement e18 = (MobileElement) driver.findElement(By.id("com.oneclickmoney.ocm:id/tvTitle"));
 		assert cleanStr(e18.getText()).equals(cleanStr(ASSERT_ACCEPTED));
 	}
 	
-	public static String cleanStr(String str) {
+	private static String cleanStr(String str) {
 		str = str.replaceAll("[\\W]", "");
 		str = str.replaceAll("[\\S]", "");
 		return str;
