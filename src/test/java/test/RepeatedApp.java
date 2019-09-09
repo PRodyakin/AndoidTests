@@ -147,8 +147,16 @@ public class RepeatedApp {
 			MobileElement el1 = (MobileElement) driver.findElementById("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[1]/android.widget.LinearLayout/android.widget.ImageView");
 			el1.click();
 		} catch (Exception e) {
-			MobileElement el1 = (MobileElement) driver.findElementById("com.android.documentsui:id/icon_mime");
-			el1.click();
+			
+			try {
+				MobileElement el1 = (MobileElement) driver.findElementById("com.android.documentsui:id/icon_mime");
+				el1.click();
+			} catch (Exception e1) {
+				MobileElement el1 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.ImageView\r\n");
+	
+				
+				
+			}
 		} 	
 		
 	}
