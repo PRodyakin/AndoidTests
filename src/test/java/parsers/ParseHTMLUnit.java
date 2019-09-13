@@ -4,11 +4,19 @@ import java.awt.List;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+
+import com.gargoylesoftware.htmlunit.AjaxController;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.UnexpectedPage;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
@@ -23,6 +31,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
+import io.appium.java_client.functions.ExpectedCondition;
 import parsers.OCMData;
 
 public class ParseHTMLUnit {
@@ -50,7 +59,7 @@ public class ParseHTMLUnit {
 		ParseHTMLUnit parseHTMLUnit = new ParseHTMLUnit();
 		parseHTMLUnit.setUserName("Автотест Автотест Автотест");
 		try {
-			parseHTMLUnit.openEditUser();
+			parseHTMLUnit.openEditUser("/api/apps/?userId=2821336&page=1");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,10 +72,11 @@ public class ParseHTMLUnit {
 		webClient = new WebClient(BrowserVersion.CHROME);
 		webClient.addRequestHeader("ACCEPT", "application/json");
 		webClient.setCredentialsProvider(getUserCred());
-	    webClient.waitForBackgroundJavaScriptStartingBefore(200);
-	    webClient.waitForBackgroundJavaScript(20000);
 	    webClient.getOptions().setThrowExceptionOnScriptError(false);
 	    webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+	    webClient.setAjaxController(new NicelyResynchronizingAjaxController());
+	    webClient.getOptions().setJavaScriptEnabled(true);
+
 		final HtmlPage loginPage = webClient.getPage(OCMData.URL_LOGIN_FORM);
 		WebResponse loginPageResponse = getResponse(loginPage);
 		//System.out.println(response.getContentAsString());
@@ -88,7 +98,7 @@ public class ParseHTMLUnit {
 		button.click();
 		webClient.waitForBackgroundJavaScriptStartingBefore(200);
 	    webClient.waitForBackgroundJavaScript(20000);
-		homePage = (HtmlPage) webClient.getCurrentWindow().getEnclosedPage();
+		//homePage = (HtmlPage) webClient.getCurrentWindow().getEnclosedPage();
 
 	}
 
@@ -143,26 +153,50 @@ public class ParseHTMLUnit {
 	}
 	
 	public void openEditUser(String url) throws Exception {
-		final HtmlTableBody body = getTableBody();
+		
+		
+		
+		UnexpectedPage userPage = webClient.getPage(getUserUrl(url));
+	    webClient.waitForBackgroundJavaScript(1000000);	
+		
+		System.out.println(userPage.getWebResponse().getContentAsString());
+//		final HtmlTableBody body = getTableBody();
+//
+//		for (final HtmlTableRow row : body.getRows()) {
+//			
+//			String userName = getUserNameFromRow(row);
+//			
+//			if (hasOpenAnchor(row) && this.userName.equals(userName)) {
+//
+//				HtmlAnchor a = (HtmlAnchor) row.getChildNodes().get(1).getChildNodes().get(1).getChildNodes().get(1);	
+//				webClient.waitForBackgroundJavaScriptStartingBefore(200);
+//			    webClient.waitForBackgroundJavaScript(20000);
+//			    System.out.println(a.getHrefAttribute()); 
+//				HtmlPage page = a.click();
+//				System.out.println(page.asText());
+//				System.out.println(page.getWebResponse().getContentAsString());
+//				
+//			}JavascriptExecutor
+//
+//JavascriptExecutor
+//		}
+	}
+	
+	public static ExpectedCondition<Boolean> waitForLoad() {
+	    return new ExpectedCondition<Boolean>() {
+	        @Override
+	        public Boolean apply(WebDriver driver) {
+	            return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("done");
+	        }
 
-		for (final HtmlTableRow row : body.getRows()) {
-			
-			String userName = getUserNameFromRow(row);
-			
-			if (hasOpenAnchor(row) && this.userName.equals(userName)) {
-
-				HtmlAnchor a = (HtmlAnchor) row.getChildNodes().get(1).getChildNodes().get(1).getChildNodes().get(1);	
-				webClient.waitForBackgroundJavaScriptStartingBefore(200);
-			    webClient.waitForBackgroundJavaScript(20000);
-			    System.out.println(a.getHrefAttribute()); 
-				HtmlPage page = a.click();
-				System.out.println(page.asText());
-				System.out.println(page.getWebResponse().getContentAsString());
-				
-			}
-
-
-		}
+	
+	    };
+	}
+	
+	public String getUserUrl(String id) {
+		
+		return OCMData.URL + id;
+		
 	}
 
 	public boolean hasDeleteAnchor(final HtmlTableRow row) {
@@ -179,6 +213,7 @@ public class ParseHTMLUnit {
 
 	public WebResponse getResponse(final HtmlPage page) {
 		WebResponse response = page.getWebResponse();
+		webClient.waitForBackgroundJavaScript(20000);
 		System.out.println(response.getStatusCode());
 		return response;
 	}

@@ -2,6 +2,8 @@ package parsers;
 
 import org.apache.commons.codec.binary.Base64;
 
+import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
+
 public final class OCMData {
 	
 	public static final String URL = "https://backend-rc.dev.oneclickmoney.ru";
@@ -19,4 +21,23 @@ public final class OCMData {
 	public static final String LOGIN_CRED = USERNAME_CRED + ":" + PASSWORD_CRED;
 	public static final String BASE_64_LOGIN = new String(Base64.encodeBase64(LOGIN_CRED.getBytes()));
 
+	
+	public static DefaultCredentialsProvider getUserCred() {
+
+		DefaultCredentialsProvider userCredentials= new DefaultCredentialsProvider();
+		userCredentials.addCredentials(USERNAME_CRED, PASSWORD_CRED);
+		return userCredentials;
+
+	}
+	
+	
+	public static String getUrlFunction(String function, String ... params) {
+		
+		String urlParams = "";
+		if (!"".equals(params)) {
+			 String.join("&", params);
+		}
+		
+		return String.format("%s/%s?%s", URL, function, urlParams);
+	}
 }
