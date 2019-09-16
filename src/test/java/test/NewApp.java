@@ -45,9 +45,9 @@ public class NewApp {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			ParseHTMLUnit parser = new ParseHTMLUnit();
-
-			(parser).deleteUser();
+//			ParseHTMLUnit parser = new ParseHTMLUnit();
+//
+//			(parser).deleteUser();
 
 		}
 
