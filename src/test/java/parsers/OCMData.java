@@ -35,7 +35,7 @@ public final class OCMData {
 		
 		String urlParams = "";
 		if (!"".equals(params)) {
-			 String.join("&", params);
+			urlParams = String.join("&", params);
 		}
 		
 		return String.format("%s/%s?%s", URL, function, urlParams);

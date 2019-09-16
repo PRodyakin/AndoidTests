@@ -228,6 +228,11 @@ public class AppData {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("id: %s; state: %s;", getId(), getState());
+	}
 
 }
 
