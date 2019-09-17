@@ -10,9 +10,12 @@
 buildscript {
     repositories {
         jcenter()
+		
+		
     }
     dependencies {
         classpath "io.qameta.allure:allure-gradle:2.8.1"
+		
     }
 }
 
@@ -27,6 +30,8 @@ repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+	maven { url 'https://jitpack.io' }
+	
 }
 
 dependencies {
@@ -42,6 +47,8 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.12.1'
 	implementation 'net.sourceforge.htmlunit:htmlunit:2.36.0'
 	implementation 'com.google.code.gson:gson:2.8.5'
+	implementation 'com.github.Ullink:simple-slack-api:1.2.0'
+	
  
 }
 
