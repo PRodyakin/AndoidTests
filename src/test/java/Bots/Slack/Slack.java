@@ -109,7 +109,7 @@ public class Slack {
 //		if (messageContent.contains("exit")) {
 //			session.disconnect();			
 //		}
-		Method m = commands.get(messageContent);
+		Method m = commands.get(messageContent.toLowerCase());
 		m.invoke(listener, session, event);
 
 	}

@@ -110,7 +110,7 @@ public class NewApp {
 
 		driver.findElement(By.id("usermodel-middle_name")).sendKeys("Автотест");
 
-		//+ it looks strange, but it works ¯\_(ツ)_/¯
+		//+ it looks strange, but it works
 		driver.findElement(By.id("usermodel-birth_date")).click();
 
 		setNumberWebView("usermodel-birth_date", "15061990", "15.06.1990");
